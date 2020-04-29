@@ -1,5 +1,7 @@
 class Item < ApplicationRecord
-  belongs_to :ranking
+  belongs_to :ranking, optional: true
   
-  validates :item, presence: true, length: { maximum: 255 }
+  has_many :votes
+  
+  has_many :total_votes, through: :votes, source: :user 
 end

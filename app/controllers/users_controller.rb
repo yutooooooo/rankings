@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :reqire_user_logged_in, only: [:show, :eidt, ]
+  before_action :require_user_logged_in, only: [:edit, :update, :destroy]
   
   def show
+    @user = User.find([params[:id]])
   end
 
   def new

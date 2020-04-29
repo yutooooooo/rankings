@@ -5,7 +5,7 @@ module SessionsHelper
   end
   
   def logged_in?
-    !!@curren_user
+    !! current_user
   end
 
 end

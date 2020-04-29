@@ -1,5 +1,6 @@
 class RankingsController < ApplicationController
   before_action :set_ranking, only: [:show, :edit, :update, :destroy ]
+  before_action :require_user_logged_in, only: [:new, :create, :edit, :update, :destroy]
   
   def index
     @rankings = Ranking.all
@@ -11,15 +12,15 @@ class RankingsController < ApplicationController
   def new
     @ranking = Ranking.new
     
-    @item = @ranking.items.build
+    10.times { @ranking.items.build }
   end
 
   def create
-    @ranking = Ranking.new(ranking_params)
+    @ranking = current_user.rankings.build(ranking_params)
     
     if @ranking.save
       flash[:success] = 'ランキングを登録しました。'
-      redirect_to @ranking
+      redirect_to root_url
     else
       flash.now[:danger] = 'ユーザの登録に失敗しました。'
       render :new
@@ -53,11 +54,7 @@ class RankingsController < ApplicationController
     @ranking = Ranking.find([:id])
   end
   
-  def company_params
-    params.require(:ranking).permit(:title, item_attributes:
-      [
-        :item
-          ]
-    )
+  def ranking_params
+    params.require(:ranking).permit(:title, items_attributes: [:id, :item] )
   end
 end
