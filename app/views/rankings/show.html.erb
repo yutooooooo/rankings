@@ -1,2 +1,16 @@
-<h1>Rankings#show</h1>
-<p>Find me in app/views/rankings/show.html.erb</p>
+<div class="text-center">
+    <h1><%= @ranking.title %></h1>
+</div>
+
+<table class="table table-striped">
+    <tbody>
+      <% @items.each do |item| %>
+        <tr>
+          <th>項目</th>
+          <td><%= item.item %></td>
+        </tr>
+      <% end %>
+    </tbody>
+</table>
+
+<%= link_to '投票', new_vote_path(ranking_id: @ranking.id), class: 'btn btn-primary'%>

@@ -7,6 +7,7 @@ class RankingsController < ApplicationController
   end
 
   def show
+    @items = @ranking.items.order()
   end
 
   def new
@@ -51,7 +52,7 @@ class RankingsController < ApplicationController
   private
   
   def set_ranking
-    @ranking = Ranking.find([:id])
+    @ranking = Ranking.find(params[:id])
   end
   
   def ranking_params

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root to: 'rankings#index'
 
+  resources :votes, only: [:new, :create, :eidt, :update]
+  
   resources :item, only: [:new, :create, :edit, :update, :destroy] 
   
   resources :rankings  

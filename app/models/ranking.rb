@@ -5,5 +5,5 @@ class Ranking < ApplicationRecord
   
   has_many :items
   
-  accepts_nested_attributes_for :items
+  accepts_nested_attributes_for :items, reject_if: lambda { |attributes| attributes['item'].blank? }
 end
