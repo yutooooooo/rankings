@@ -10,7 +10,6 @@ class User < ApplicationRecord
     
     has_many :votes
     
-    def vote(item)
-      self.votes.find_or_create_by(item_id: item.id)
-    end
+    has_many :user_items, through: :votes, source: :item 
+    
 end

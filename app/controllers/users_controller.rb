@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :creatings]
   before_action :require_user_logged_in, only: [:edit, :update, :destroy]
   
   def show
-    @user = User.find([params[:id]])
+    @rankings = Ranking.find(@user.user_items.pluck(:ranking_id))
   end
 
   def new
@@ -42,6 +42,12 @@ class UsersController < ApplicationController
     flash[:success] = 'User は正常に削除されました'
     redirect_to root_url
   end
+  
+  
+  def creatings
+    @created_rankings = @user.rankings
+  end
+  
   
   private
   

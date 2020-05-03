@@ -1,16 +1,49 @@
+<% ranking_items(@ranking, 10) %>  
 <div class="text-center">
     <h1><%= @ranking.title %></h1>
 </div>
 
 <table class="table table-striped">
     <tbody>
-      <% @items.each do |item| %>
         <tr>
-          <th>項目</th>
-          <td><%= item.item %></td>
+          <% n = 0 %>
+          <% m = 0 %>
+          <% total_vote = 0 %>
+          <% @items.zip(@item_votes) do  |item, item_vote| %>
+              <% if total_vote == item_vote %>
+                <% m += 1 %>
+                <th><%= n %>位</th>
+              <% else %>
+                <% total_vote = item_vote %>
+                <% n += 1 %>
+                <th><%= n + m %>位</th>
+              <% end %>
+            <td><%= item.item %></td>
+            <td><%= item_vote %>票</td>
         </tr>
-      <% end %>
+          <% end %>
     </tbody>
 </table>
 
-<%= link_to '投票', new_vote_path(ranking_id: @ranking.id), class: 'btn btn-primary'%>
+<%= render 'button', ranking: @ranking %>
+
+<h2>コメント</h2>
+
+<ul class="list-unstyled">
+  <% @votes.each do |vote| %>
+  <% if comment?(vote) %>
+  <% comment_user(vote) %>
+    <li class="media mb-3">
+      <img class="rounded img-fluid" src="<%= gravatar_url(@user, { size: 50 }) %>" alt="">
+      <div class="media-body">
+        <div>
+          <%= link_to @user.name, user_path(@user) %> 
+        </div>
+        <div>
+          <p><%= vote.comment %></p>
+        </div>
+      </div>
+    </li>
+  <% end %>
+  <% end %>
+</ul>

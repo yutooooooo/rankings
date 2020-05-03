@@ -7,7 +7,8 @@ class RankingsController < ApplicationController
   end
 
   def show
-    @items = @ranking.items.order()
+    @votes = Vote.where(item_id: @ranking.items.pluck(:id))
+    @users = User.find(@votes.pluck(:user_id))
   end
 
   def new
@@ -49,6 +50,8 @@ class RankingsController < ApplicationController
     redirect_to root_url
   end
   
+
+  
   private
   
   def set_ranking
@@ -58,4 +61,5 @@ class RankingsController < ApplicationController
   def ranking_params
     params.require(:ranking).permit(:title, items_attributes: [:id, :item] )
   end
+  
 end

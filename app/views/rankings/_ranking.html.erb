@@ -1,0 +1,28 @@
+<% rankings.each do |ranking| %>  
+<% ranking_items(ranking, 3) %>  
+  <h1><%= ranking.title %></h1>
+  <table class="table table-striped">
+    <tbody>
+        <tr>
+          <% n = 0 %>
+          <% m = 0 %>
+          <% total_vote = 0 %>
+          <% @items.zip(@item_votes) do  |item, item_vote| %>
+              <% if total_vote == item_vote %>
+                <% m += 1 %>
+                <th><%= n %>位</th>
+              <% else %>
+                <% total_vote = item_vote %>
+                <% n += 1 %>
+                <th><%= n + m %>位</th>
+              <% end %>
+            <td><%= item.item %></td>
+            <td><%= item_vote %>票</td>
+        </tr>
+          <% end %>
+    </tbody>
+</table>
+
+<%= render 'button', ranking: ranking %>
+
+<% end %>

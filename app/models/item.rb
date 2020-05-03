@@ -3,6 +3,6 @@ class Item < ApplicationRecord
   
   has_many :votes
   
-  has_many :vote_users, through: :votes, source: :user 
+  has_many :item_users, through: :votes, source: :user 
   
 end

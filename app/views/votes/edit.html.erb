@@ -1,2 +1,27 @@
-<h1>Votes#edit</h1>
-<p>Find me in app/views/votes/edit.html.erb</p>
+<div class="text-center">
+    <h1><%= @ranking.title %></h1>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <td>項目</td>
+      <td>選択</td>
+    </tr>
+  </thead>
+  <tbody>
+    <%= form_with(model: current_user.votes.build, local: true) do |f| %>
+      <% @items.each do |item| %>
+        <tr>
+          <td><%= label_tag(:item_id, item.item) %></td>
+          <td><%= radio_button_tag(:item_id, item.id) %></td>
+        </tr>
+      <% end %>
+  </tbody>
+</table>
+    <%= f.label :comment, 'コメント' %>
+    <%= f.text_field :comment %> 
+    
+    <%= f.submit '投票' %>
+          
+    <% end %>

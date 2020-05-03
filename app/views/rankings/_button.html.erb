@@ -1,0 +1,7 @@
+<%= link_to '詳細', ranking_path(ranking), class: 'btn btn-primary'%>
+<% if vote?(ranking) %>
+<% @vote = @votes.where(user_id: current_user.id) %>
+<%= link_to '再投票', edit_vote_path(@vote), class: 'btn btn-primary'%>
+<% else %>
+<%= link_to '投票', new_vote_path(ranking_id: ranking.id), class: 'btn btn-primary'%>
+<% end %>

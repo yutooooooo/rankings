@@ -1,5 +1,6 @@
 <div class="row">
-  <div class="card col-sm-4">
+  <aside class="col-sm-4">
+    <div class="card">
       <div class="card-header">
         <h3 class="card-title"><%= @user.name %></h3>
       </div>
@@ -8,6 +9,7 @@
         <%= link_to 'ユーザー情報編集', edit_user_path(@user), class: 'btn btn-primary'%>
       </div>
     </div>
+  </aside>
   <div class="col-sm-8">
     <ul class="nav nav-tabs nav-justified mb-3">
         <li class="nav-item"><a href="<%= user_path(@user) %>" class="nav-link <%= 'active' if current_page?(user_path(@user)) %>">投票したランキング</a></li>
@@ -16,4 +18,4 @@
   </div>
 </div>
 
-<%= render './rankings/ranking', rankings: @rankings %>
+<%= render './rankings/ranking', rankings: @created_rankings %>
