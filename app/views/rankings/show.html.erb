@@ -1,9 +1,10 @@
 <% ranking_items(@ranking, 10) %>  
 <div class="text-center">
-    <h1><%= @ranking.title %></h1>
+    <h2><%= @ranking.title %></h2>
 </div>
 
-<table class="table table-striped">
+<% if Item.find(Vote.all.pluck(:item_id)).pluck(:ranking_id).include?(@ranking.id) %>
+<table class="table table-striped text-center">
     <tbody>
         <tr>
           <% n = 0 %>
@@ -17,6 +18,8 @@
                 <% total_vote = item_vote %>
                 <% n += 1 %>
                 <th><%= n + m %>位</th>
+                <% n += m %>
+                <% m = 0 %>
               <% end %>
             <td><%= item.item %></td>
             <td><%= item_vote %>票</td>
@@ -25,10 +28,34 @@
     </tbody>
 </table>
 
-<%= render 'button', ranking: @ranking %>
+<% else %>
+<table class="table table-striped text-center">
+    <tbody>
+        <% @ranking.items.order(:id).each do |item| %>
+        <tr>
+          <td>-位</td>
+          <td><%= item.item %></td>
+          <td>0票</td>
+        </tr>
+        <% end %>
+    </tbody>
+  </table>
+<% end %>
 
-<h2>コメント</h2>
+<div class="row d-flex justify-content-around">
+<% if logged_in? && vote?(@ranking) %>
+<% vote = @votes.find_by(user_id: current_user.id) %>
+<%= link_to '再投票', edit_vote_path(vote), class: 'btn btn-primary'%>
+<% else %>
+<%= link_to '投票', new_vote_path(ranking_id: @ranking.id), class: 'btn btn-primary'%>
+<% end %>
+<% if current_user == @ranking.user %>
+<%= link_to '編集', edit_ranking_path(@ranking), class: 'btn btn-primary'%>
+<% end %>
+</div>
 
+
+<div class="mt-5">
 <ul class="list-unstyled">
   <% @votes.each do |vote| %>
   <% if comment?(vote) %>
@@ -47,3 +74,4 @@
   <% end %>
   <% end %>
 </ul>
+</div>

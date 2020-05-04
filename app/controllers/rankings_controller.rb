@@ -38,7 +38,7 @@ class RankingsController < ApplicationController
       flash[:success] = 'ランキングを登録しました。'
       redirect_to @ranking
     else
-      flash.now[:danger] = 'ユーザの登録に失敗しました。'
+      flash.now[:danger] = 'ランキングの登録に失敗しました。'
       render :new
     end
   end

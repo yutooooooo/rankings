@@ -25,7 +25,7 @@ class VotesController < ApplicationController
     @vote = Vote.find(params[:id])
     @item = Item.find(params[:item_id])
     @ranking = @item.ranking
-    @vote.update!(item_id: @item.id, comment: params[:vote][:comment])
+    @vote.update(item_id: @item.id, comment: params[:vote][:comment])
     flash[:success] = '投票しました'
     redirect_to @ranking
   end

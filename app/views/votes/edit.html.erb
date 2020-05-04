@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    <%= form_with(model: current_user.votes.build, local: true) do |f| %>
+    <%= form_with(model: @vote, local: true) do |f| %>
       <% @items.each do |item| %>
         <tr>
           <td><%= label_tag(:item_id, item.item) %></td>

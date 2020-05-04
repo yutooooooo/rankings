@@ -4,8 +4,7 @@
         <h3 class="card-title"><%= @user.name %></h3>
       </div>
       <div class="card-body">
-        <img class="rounded img-fluid" src="<%= gravatar_url(@user, { size: 100 }) %>" alt="">
-        <%= link_to 'ユーザー情報編集', edit_user_path(@user), class: 'btn btn-primary'%>
+          <img class="rounded img-fluid" src="<%= gravatar_url(@user, { size: 100 }) %>" alt="">
       </div>
     </div>
   <div class="col-sm-8">

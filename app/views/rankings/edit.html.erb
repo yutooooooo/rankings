@@ -1,2 +1,24 @@
-<h1>Rankings#edit</h1>
-<p>Find me in app/views/rankings/edit.html.erb</p>
+<div class="text-center">
+    <h1>ランキング編集</h1>
+</div>
+
+<div class="row mt-5">
+  <div class="col-sm-6 offset-sm-3">
+      <%= form_for @ranking, url:rankings_path do |f| %>
+      
+        <div class="form-group">
+          <%= f.label :title, 'ランキング名' %>
+          <%= f.text_field :title, class: 'form-control' %>
+        </div>
+ 
+        <div class="form-group">  
+          <%= f.fields_for :items do |d| %>
+            <%= d.label :item, '項目' %>           
+            <%= d.text_field :item, class: 'form-control' %>
+          <% end %>
+        </div>
+        
+        <%= f.submit '作成', class: 'btn btn-primary btn-block' %>
+      <% end %>
+  </div>
+</div>

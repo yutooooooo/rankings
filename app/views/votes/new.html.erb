@@ -13,14 +13,14 @@
     <%= form_with(model: @vote, local: true) do |f| %>
       <% @items.each do |item| %>
         <tr>
-          <td><%= f.label_tag(:item_id, item.item) %></td>
-          <td><%= f.radio_button_tag(:item_id, item.id) %></td>
+          <td><%= label_tag(:item_id, item.item) %></td>
+          <td><%= radio_button_tag(:item_id, item.id) %></td>
         </tr>
       <% end %>
   </tbody>
 </table>
     <%= f.label :comment, 'コメント' %>
-    <%= f.text_area :comment %> 
+    <%= f.text_field :comment %> 
     
     <%= f.submit '投票' %>
           
