@@ -8,7 +8,7 @@ class User < ApplicationRecord
     
     has_many :rankings
     
-    has_many :votes
+    has_many :votes, dependent: :destroy
     
     has_many :user_items, through: :votes, source: :item 
     

@@ -51,26 +51,28 @@
 <% end %>
 <% if current_user == @ranking.user %>
 <%= link_to '編集', edit_ranking_path(@ranking), class: 'btn btn-primary'%>
+<%= link_to "削除", @ranking, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
 <% end %>
+<%= link_to '一覧へ', root_path, class: "btn btn-primary" %> 
 </div>
 
 
 <div class="mt-5">
 <ul class="list-unstyled">
   <% @votes.each do |vote| %>
-  <% if comment?(vote) %>
-  <% comment_user(vote) %>
-    <li class="media mb-3">
-      <img class="rounded img-fluid" src="<%= gravatar_url(@user, { size: 50 }) %>" alt="">
-      <div class="media-body">
-        <div>
-          <%= link_to @user.name, user_path(@user) %> 
+  <% unless comment?(vote) %>
+    <% comment_user(vote) %>
+      <li class="media mb-3">
+        <img class="rounded img-fluid" src="<%= gravatar_url(@user, { size: 50 }) %>" alt="">
+        <div class="media-body">
+          <div>
+            <%= link_to @user.name, user_path(@user) %> 
+          </div>
+          <div>
+            <p><%= vote.comment %></p>
+          </div>
         </div>
-        <div>
-          <p><%= vote.comment %></p>
-        </div>
-      </div>
-    </li>
+      </li>
   <% end %>
   <% end %>
 </ul>

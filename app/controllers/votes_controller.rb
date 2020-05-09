@@ -1,5 +1,6 @@
 class VotesController < ApplicationController
   before_action :require_user_logged_in
+  before_action :set_vote, only: [:edit, :update]
   
   def new
     @vote = current_user.votes.build
@@ -8,26 +9,38 @@ class VotesController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
-    @ranking = @item.ranking
-    current_user.votes.create!(item_id: @item.id, comment: params[:vote][:comment])
-    flash[:success] = '投票しました'
-    redirect_to @ranking
+    @vote = current_user.votes.build(item_id: params[:item_id], comment: params[:vote][:comment])
+
+    if @vote.save
+      flash[:success] = '投票しました'
+      @item = Item.find(params[:item_id])
+      @ranking = @item.ranking
+      redirect_to @ranking
+    else 
+      flash[:danger] = '投票に失敗しました'
+      @ranking = Ranking.find(params[:ranking_id])
+      @items = @ranking.items
+      render :new
+    end
   end
 
   def edit
-    @vote = Vote.find(params[:id])
     @ranking = Item.find(@vote.item_id).ranking
     @items = @ranking.items
   end
 
   def update
-    @vote = Vote.find(params[:id])
-    @item = Item.find(params[:item_id])
-    @ranking = @item.ranking
-    @vote.update(item_id: @item.id, comment: params[:vote][:comment])
-    flash[:success] = '投票しました'
-    redirect_to @ranking
+    if @vote.update(item_id: params[:item_id], comment: params[:vote][:comment])
+      flash[:success] = '投票しました'
+      @item = Item.find(params[:item_id])
+      @ranking = @item.ranking
+      redirect_to @ranking
+    else 
+      flash[:danger] = '投票に失敗しました'
+      @ranking = Ranking.find(params[:ranking_id])
+      @items = @ranking.items
+      render :new
+    end
   end
   
   
@@ -36,5 +49,9 @@ class VotesController < ApplicationController
   def vote_params
     params.require(:vote).permit(:comment)
   end
+  
+  def set_vote
+    @vote = Vote.find(params[:id])
+  end 
   
 end

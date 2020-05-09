@@ -4,8 +4,9 @@
 
 <div class="row mt-5">
   <div class="col-sm-6 offset-sm-3">
-      <%= form_for @ranking, url:rankings_path do |f| %>
-      
+      <%= form_with(model:@ranking, local: true) do |f| %>
+        <%= render 'layouts/error_messages', model: f.object %>
+        
         <div class="form-group">
           <%= f.label :title, 'ランキング名' %>
           <%= f.text_field :title, class: 'form-control' %>
@@ -13,7 +14,8 @@
  
         <div class="form-group">  
           <%= f.fields_for :items do |d| %>
-            <%= d.label :item, '項目' %>           
+
+            <%= d.label :item, '項目' %>    
             <%= d.text_field :item, class: 'form-control' %>
           <% end %>
         </div>

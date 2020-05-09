@@ -21,7 +21,7 @@
 </table>
     <%= f.label :comment, 'コメント' %>
     <%= f.text_field :comment %> 
-    
+    <%= hidden_field_tag :ranking_id, @ranking.id %>
     <%= f.submit '投票' %>
           
     <% end %>

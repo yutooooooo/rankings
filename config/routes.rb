@@ -3,9 +3,9 @@ Rails.application.routes.draw do
 
   resources :votes, only: [:new, :create, :edit, :update]
   
-  resources :item, only: [:new, :create, :edit, :update, :destroy] 
-  
-  resources :rankings
+  resources :rankings do
+    get :search, on: :collection
+  end
   
   
   get 'login', to: 'sessions#new'

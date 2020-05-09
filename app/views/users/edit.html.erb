@@ -26,9 +26,11 @@
         <%= f.label :password_confirmation, 'パスワード(確認)' %>
         <%= f.password_field :password_confirmation, class: 'form-control' %>
       </div>
-
-      <%= link_to '戻る', user_path(@user), class: 'btn btn-primary' %>
-      <%= f.submit '登録', class: 'btn btn-primary' %>
+      
+      <div class="text-center">
+        <%= link_to '戻る', user_path(@user), class: 'btn btn-primary' %>
+        <%= f.submit '登録', class: 'btn btn-primary' %>
+      </div>
     <% end %>
   </div>
 </div>

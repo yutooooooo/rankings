@@ -24,7 +24,8 @@ class RankingsController < ApplicationController
       flash[:success] = 'ランキングを登録しました。'
       redirect_to root_url
     else
-      flash.now[:danger] = 'ユーザの登録に失敗しました。'
+      flash[:danger] = 'ランキングの登録に失敗しました。'
+      10.times { @ranking.items.build }
       render :new
     end
   
@@ -34,20 +35,32 @@ class RankingsController < ApplicationController
   end
 
   def update
+    
     if @ranking.update(ranking_params)
-      flash[:success] = 'ランキングを登録しました。'
+      flash[:success] = 'ランキングを編集しました。'
       redirect_to @ranking
     else
-      flash.now[:danger] = 'ランキングの登録に失敗しました。'
-      render :new
+      flash.now[:danger] = 'ランキングの編集に失敗しました。'
+      render :edit
     end
+  
   end
 
   def destroy
+    @user = @ranking.user
+    
     @ranking.destroy
     
-    flash[:success] = 'User は正常に削除されました'
-    redirect_to root_url
+    flash[:success] = 'ランキング は正常に削除されました'
+    redirect_to user_url(@user)
+  end
+  
+  def search
+    if params[:title].present?
+      @rankings = Ranking.where('title LIKE ?', "%#{params[:title]}%")
+    else
+      @rankings = Ranking.none
+    end
   end
   
 
@@ -59,7 +72,7 @@ class RankingsController < ApplicationController
   end
   
   def ranking_params
-    params.require(:ranking).permit(:title, items_attributes: [:id, :item] )
+    params.require(:ranking).permit(:title, items_attributes: [:id, :item, :_destroy] )
   end
   
 end
