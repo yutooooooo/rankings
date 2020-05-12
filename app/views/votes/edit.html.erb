@@ -11,6 +11,7 @@
   </thead>
   <tbody>
     <%= form_with(model: @vote, local: true) do |f| %>
+      <%= render 'layouts/error_messages', model: f.object %>
       <% @items.each do |item| %>
         <tr>
           <td><%= label_tag(:item_id, item.item) %></td>

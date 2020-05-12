@@ -11,18 +11,8 @@
   user = User.create!(name: "user#{n}", email: "user#{n}@test.com", password: "password")
 end
 
-  
-ranking1 = User.first.rankings.create!(title: "test1")
-
-ranking2 = User.first.rankings.create!(title: "test2")
-
-
-(1..10).each do |n|
-  item1 = ranking1.items.create!(item: "item#{n}")
-end
-
-(11..20).each do |n|
-  item1 = ranking2.items.create!(item: "item#{n}")
+(1..30).each do |n|
+  ranking1 = User.first.rankings.create!(title: "ランキング#{n}", "items_attributes"=>{"0"=>{"item"=>"item#{n + 1}"}, "1"=>{"item"=>"item#{n + 2}"}, "2"=>{"item"=>"item#{n + 3}"}, "3"=>{"item"=>"item#{n + 4}"}, "4"=>{"item"=>"item#{n + 5}"}, "5"=>{"item"=>"item#{n + 6}"}, "6"=>{"item"=>"item#{n + 7}"}, "7"=>{"item"=>"item#{n + 8}"}, "8"=>{"item"=>"item#{n + 9}"}, "9"=>{"item"=>"item#{n + 10}"}})
 end
 
 (1..10).each do |n|

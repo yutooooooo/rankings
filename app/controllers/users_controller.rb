@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :creatings]
   before_action :require_user_logged_in, only: [:edit, :update, :show, :creatings]
+  before_action :correct_user, only: [:edit, :update]
   
   def show
-    @rankings = Ranking.find(@user.user_items.pluck(:ranking_id))
+    @rankings = Ranking.find(@user.user_items.pluck(:ranking_id)).page(params[:page]).per(18)
   end
 
   def new
@@ -37,7 +38,7 @@ class UsersController < ApplicationController
   end
 
   def creatings
-    @created_rankings = @user.rankings
+    @created_rankings = @user.rankings.page(params[:page]).per(25)
   end
   
   
@@ -49,6 +50,12 @@ class UsersController < ApplicationController
   
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+  
+  def correct_user
+    unless current_user == @user
+      redirect_to root_url
+    end
   end
 
 end

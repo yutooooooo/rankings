@@ -1,6 +1,8 @@
 class VotesController < ApplicationController
   before_action :require_user_logged_in
   before_action :set_vote, only: [:edit, :update]
+  before_action :correct_vote, only: [:edit, :update]
+
   
   def new
     @vote = current_user.votes.build
@@ -54,4 +56,9 @@ class VotesController < ApplicationController
     @vote = Vote.find(params[:id])
   end 
   
+  def correct_vote
+    unless current_user == @vote.user
+      redirect_to root_url
+    end
+  end
 end

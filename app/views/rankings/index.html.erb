@@ -1,5 +1,5 @@
 <%= form_with url: search_rankings_path, method: :get, local: true do |f| %>
-  <%= f.text_field :title %>
+  <%= f.text_field :title, placeholder: 'タイトル' %>
   <%= f.submit :search %>
 <% end %>
 <%= render 'ranking', rankings: @rankings %>

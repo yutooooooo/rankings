@@ -1,9 +1,11 @@
 class RankingsController < ApplicationController
   before_action :set_ranking, only: [:show, :edit, :update, :destroy ]
   before_action :require_user_logged_in, only: [:new, :create, :edit, :update, :destroy]
+  before_action :correct_ranking, only: [:edit, :update, :destroy]
+  
   
   def index
-    @rankings = Ranking.all
+    @rankings = Ranking.all.page(params[:page]).per(18)
   end
 
   def show
@@ -75,4 +77,9 @@ class RankingsController < ApplicationController
     params.require(:ranking).permit(:title, items_attributes: [:id, :item, :_destroy] )
   end
   
+  def correct_ranking
+    unless current_user == @ranking.user
+      redirect_to root_url
+    end
+  end
 end
