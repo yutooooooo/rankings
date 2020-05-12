@@ -34,6 +34,7 @@ class RankingsController < ApplicationController
   end
 
   def edit
+    (10 - @ranking.items.count).times { @ranking.items.build }
   end
 
   def update
