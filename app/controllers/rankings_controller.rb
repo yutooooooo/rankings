@@ -60,7 +60,7 @@ class RankingsController < ApplicationController
   
   def search
     if params[:title].present?
-      @rankings = Ranking.where('title LIKE ?', "%#{params[:title]}%")
+      @rankings = Kaminari.paginate_array(Ranking.where('title LIKE ?', "%#{params[:title]}%")).page(params[:page]).per(18)
     else
       @rankings = Ranking.none
     end
