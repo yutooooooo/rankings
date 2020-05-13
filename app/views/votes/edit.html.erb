@@ -1,28 +1,33 @@
-<div class="text-center">
+<div class="text-center mb-5">
     <h1><%= @ranking.title %></h1>
+    <div class="my-3">
+      <p>項目から1つ選んで投票できます。</p>
+    </div>
 </div>
-
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <td>項目</td>
-      <td>選択</td>
-    </tr>
-  </thead>
-  <tbody>
-    <%= form_with(model: @vote, local: true) do |f| %>
-      <%= render 'layouts/error_messages', model: f.object %>
-      <% @items.each do |item| %>
-        <tr>
-          <td><%= label_tag(:item_id, item.item) %></td>
-          <td><%= radio_button_tag(:item_id, item.id) %></td>
-        </tr>
-      <% end %>
-  </tbody>
-</table>
-    <%= f.label :comment, 'コメント' %>
-    <%= f.text_field :comment %> 
-    <%= hidden_field_tag :ranking_id, @ranking.id %>
-    <%= f.submit '投票' %>
-          
+<form>
+  <%= form_with(model: @vote, local: true) do |f| %>
+    <%= render 'layouts/error_messages', model: f.object %>
+    <% @items.each do |item| %>
+    <div class="form-group row">
+      <div class="col-form-label col-4 offset-3">
+        <%= label_tag(:"item_id_#{item.id}", item.item) %>
+      </div>
+      <div class="col-1 offset-1">
+        <%= radio_button_tag(:item_id, item.id) %>  
+      </div>
+    </div>
     <% end %>
+    
+    <div class="form-group text-center">
+      <div class="col-form-label">
+        <%= f.label :comment, 'コメント' %>
+      </div>
+        <%= f.text_area :comment, :size=>"60x5" %>
+    </div>
+    <div class="form-group text-center">
+      <%= hidden_field_tag :ranking_id, @ranking.id %>
+      <%= f.submit '投票' %>
+    </div>
+  <% end %>
+</form>
+   

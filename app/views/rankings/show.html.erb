@@ -5,27 +5,27 @@
 
 <% if Item.find(Vote.all.pluck(:item_id)).pluck(:ranking_id).include?(@ranking.id) %>
 <table class="table table-striped text-center">
-    <tbody>
-        <tr>
-          <% n = 0 %>
-          <% m = 0 %>
-          <% total_vote = 0 %>
-          <% @items.zip(@item_votes) do  |item, item_vote| %>
-              <% if total_vote == item_vote %>
-                <% m += 1 %>
-                <th><%= n %>位</th>
-              <% else %>
-                <% total_vote = item_vote %>
-                <% n += 1 %>
-                <th><%= n + m %>位</th>
-                <% n += m %>
-                <% m = 0 %>
-              <% end %>
-            <td><%= item.item %></td>
-            <td><%= item_vote %>票</td>
-        </tr>
-          <% end %>
-    </tbody>
+  <tbody>
+  <% n = 0 %>
+  <% m = 0 %>
+  <% total_vote = 0 %>  
+  <% @items.zip(@item_votes) do  |item, item_vote| %>
+    <tr>
+    <% if total_vote == item_vote %>
+    <% m += 1 %>
+      <td><%= n %>位</td>
+    <% else %>
+    <% total_vote = item_vote %>
+    <% n += 1 %>
+      <td><%= n + m %>位</td>
+    <% n += m %>
+    <% m = 0 %>
+    <% end %>
+      <td><%= item.item %></td>
+      <td><%= item_vote %>票</td>
+    </tr>
+  <% end %>
+  </tbody>
 </table>
 
 <% else %>

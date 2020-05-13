@@ -1,32 +1,32 @@
-  <div class="row flex-wrap d-flex">
-  <% rankings.each do |ranking| %>  
-    <div class="col-md-4 col-sm-6 my-5">
-      <% ranking_items(ranking, 2) %>  
-    <div class="text-center">
-      <h3><%= ranking.title %></h3>
-    </div>
-      
-    <% if Item.find(Vote.all.pluck(:item_id)).pluck(:ranking_id).include?(ranking.id) %>
-      <table class="table table-striped text-center">
-        <tbody>
-            <tr>
-              <% n = 0 %>
-              <% m = 0 %>
-              <% total_vote = 0 %>
-              <% @items.zip(@item_votes) do  |item, item_vote| %>
-                  <% if total_vote == item_vote %>
-                    <% m += 1 %>
-                    <th><%= n %>位</th>
-                  <% else %>
-                    <% total_vote = item_vote %>
-                    <% n += 1 %>
-                    <th><%= n + m %>位</th>
-                    <% m = 0 %>
-                  <% end %>
+<div class="row flex-wrap d-flex">
+<% rankings.each do |ranking| %>  
+  <div class="col-md-4 col-sm-6 my-5">
+    <% ranking_items(ranking, 2) %>  
+  <div class="text-center">
+    <h3><%= ranking.title %></h3>
+  </div>
+    
+  <% if Item.find(Vote.all.pluck(:item_id)).pluck(:ranking_id).include?(ranking.id) %>
+     <table class="table table-striped text-center">
+       <tbody>
+         <% n = 0 %>
+         <% m = 0 %>
+         <% total_vote = 0 %>
+         <% @items.zip(@item_votes) do  |item, item_vote| %>
+           <tr>
+            <% if total_vote == item_vote %>
+              <% m += 1 %>
+              <td><%= n %>位</td>
+            <% else %>
+               <% total_vote = item_vote %>
+               <% n += 1 %>
+               <td><%= n + m %>位</td>
+               <% m = 0 %>
+            <% end %>
                 <td><%= item.item %></td>
                 <td><%= item_vote %>票</td>
             </tr>
-              <% end %>
+         <% end %>
         </tbody>
       </table>
       
