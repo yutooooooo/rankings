@@ -4,7 +4,7 @@
       <p>項目から1つ選んで投票できます。</p>
     </div>
 </div>
-<form>
+
   <%= form_with(model: @vote, local: true) do |f| %>
     <%= render 'layouts/error_messages', model: f.object %>
     <% @items.each do |item| %>
@@ -22,12 +22,13 @@
       <div class="col-form-label">
         <%= f.label :comment, 'コメント' %>
       </div>
-        <%= f.text_area :comment, :size=>"60x5" %>
+     <%= f.text_area :comment, class: 'form-control' %>
     </div>
     <div class="form-group text-center">
       <%= hidden_field_tag :ranking_id, @ranking.id %>
       <%= f.submit '投票' %>
     </div>
   <% end %>
-</form>
+
+
    
