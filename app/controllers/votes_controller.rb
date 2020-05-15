@@ -3,7 +3,6 @@ class VotesController < ApplicationController
   before_action :set_vote, only: [:edit, :update]
   before_action :correct_vote, only: [:edit, :update]
 
-  
   def new
     @vote = current_user.votes.build
     @ranking = Ranking.find(params[:ranking_id])
@@ -11,7 +10,8 @@ class VotesController < ApplicationController
   end
 
   def create
-    @vote = current_user.votes.build(item_id: params[:item_id], comment: params[:vote][:comment])
+    @vote = current_user.votes.build(vote_params)
+    @vote.item_id = params[:item_id]
 
     if @vote.save
       flash[:success] = '投票しました'
@@ -32,7 +32,8 @@ class VotesController < ApplicationController
   end
 
   def update
-    if @vote.update(item_id: params[:item_id], comment: params[:vote][:comment])
+    @vote.update(vote_params)
+    if @vote.update(item_id: params[:item_id])
       flash[:success] = '投票しました'
       @item = Item.find(params[:item_id])
       @ranking = @item.ranking

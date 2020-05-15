@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
   
   def show
-    @rankings = Kaminari.paginate_array(Ranking.find(@user.user_items.pluck(:ranking_id))).page(params[:page]).per(18)
+    rankings = Ranking.find(@user.votes.order(created_at: :desc).includes(:item).pluck(:ranking_id))
+    @rankings = Kaminari.paginate_array(rankings).page(params[:page]).per(18)
   end
 
   def new
@@ -38,7 +39,7 @@ class UsersController < ApplicationController
   end
 
   def creatings
-    @created_rankings = @user.rankings.page(params[:page]).per(18)
+    @created_rankings = @user.rankings.order(created_at: :desc).page(params[:page]).per(18)
   end
   
   private

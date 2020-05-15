@@ -5,7 +5,7 @@ class RankingsController < ApplicationController
   
   
   def index
-    @rankings = Ranking.all.page(params[:page]).per(18)
+    @rankings = Ranking.all.order(created_at: :desc).page(params[:page]).per(18)
   end
 
   def show
@@ -60,7 +60,7 @@ class RankingsController < ApplicationController
   
   def search
     if params[:title].present?
-      @rankings = Kaminari.paginate_array(Ranking.where('title LIKE ?', "%#{params[:title]}%")).page(params[:page]).per(18)
+      @rankings = Kaminari.paginate_array(Ranking.where('title LIKE ?', "%#{params[:title]}%").order(created_at: :desc)).page(params[:page]).per(18)
     else
       @rankings = Ranking.none
     end
